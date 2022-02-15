@@ -24,6 +24,7 @@
     <ProjectGuid>{e5922963-053d-48fb-a491-557c08b53792}</ProjectGuid>
     <RootNamespace>HexagonProject</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>OctogonProject</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
