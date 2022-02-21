@@ -88,7 +88,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat *pointerVertices = &vertices;
+		GLfloat *pointerVertices[27] = &vertices;
 		rotation(pointerVertices);
 
 		GLuint VAO, VBO, EBO;
@@ -124,22 +124,23 @@ int main()
 		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
 		glDeleteBuffers(1, &EBO);
-		glDeleteProgram(shaderProgram);
-		glfwDestroyWindow(window);
-		glfwTerminate();
+
 		
 	}
 
+	glDeleteProgram(shaderProgram);
+	glfwDestroyWindow(window);
+	glfwTerminate();
 	
 	return 0;
 }
 
-void rotation(GLfloat* vertices) {
+void rotation(GLfloat* vertices[]) {
 	int size = sizeof(vertices) / sizeof(vertices[0]);
 	float angle = 0.001f;
 	for (int i = 0; i < size; i += 3) {
-		vertices[i] = static_cast<GLfloat> (vertices[i] * cos(angle)) - (vertices[i] * sin(angle));
-		vertices[i] = static_cast<GLfloat> (vertices[i+1] * cos(angle)) + (vertices[i+1] * sin(angle));
+		*vertices[i] = static_cast<GLfloat> (*vertices[i] * cos(angle)) - (*vertices[i] * sin(angle));
+		*vertices[i+1] = static_cast<GLfloat> (*vertices[i+1] * cos(angle)) + (*vertices[i+1] * sin(angle));
 	}
 }
 
