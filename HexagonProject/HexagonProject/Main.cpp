@@ -19,7 +19,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 
 int main();
-void rotation(GLfloat* vertices);
+void rotation(GLfloat* vertices, float speed);
 
 int main()
 {
@@ -83,32 +83,29 @@ int main()
 		0, 8, 7
 	};
 
+	GLuint VAO, VBO, EBO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
+
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 
 
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat *pointerVertices = vertices;
-		rotation(pointerVertices);
-
-		GLuint VAO, VBO, EBO;
-		glGenVertexArrays(1, &VAO);
-		glGenBuffers(1, &VBO);
-		glGenBuffers(1, &EBO);
-
-		glBindVertexArray(VAO);
-		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-		glEnableVertexAttribArray(0);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindVertexArray(0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
+	
 		
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -119,15 +116,12 @@ int main()
 		//Shader lezárása
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-
-		glDeleteVertexArrays(1, &VAO);
-		glDeleteBuffers(1, &VBO);
-		glDeleteBuffers(1, &EBO);
-
-		
 	}
 
+
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
 	glDeleteProgram(shaderProgram);
 	glfwDestroyWindow(window);
 	glfwTerminate();
@@ -135,16 +129,7 @@ int main()
 	return 0;
 }
 
-void rotation(GLfloat* vertices) {
-	
-	int size = 27;
-	float angle = 0.001f;
-	
-	for (int i = 0; i < size; i += 3) {
-		vertices[i] = static_cast<GLfloat> (vertices[i] * cos(angle)) - (vertices[i+1] * sin(angle));
-		vertices[i+1] = static_cast<GLfloat> (vertices[i] * sin(angle)) + (vertices[i+1] * cos(angle));
-	}
-}
+
 
 
 
