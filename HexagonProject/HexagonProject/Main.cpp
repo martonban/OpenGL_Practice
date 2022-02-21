@@ -19,7 +19,7 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 
 int main();
-void rotation(GLfloat* vertices[]);
+void rotation(GLfloat* vertices);
 
 int main()
 {
@@ -88,7 +88,7 @@ int main()
 
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat *pointerVertices[27] = &vertices;
+		GLfloat *pointerVertices = vertices;
 		rotation(pointerVertices);
 
 		GLuint VAO, VBO, EBO;
@@ -135,12 +135,14 @@ int main()
 	return 0;
 }
 
-void rotation(GLfloat* vertices[]) {
-	int size = sizeof(vertices) / sizeof(vertices[0]);
+void rotation(GLfloat* vertices) {
+	
+	int size = 27;
 	float angle = 0.001f;
+	
 	for (int i = 0; i < size; i += 3) {
-		*vertices[i] = static_cast<GLfloat> (*vertices[i] * cos(angle)) - (*vertices[i] * sin(angle));
-		*vertices[i+1] = static_cast<GLfloat> (*vertices[i+1] * cos(angle)) + (*vertices[i+1] * sin(angle));
+		vertices[i] = static_cast<GLfloat> (vertices[i] * cos(angle)) - (vertices[i+1] * sin(angle));
+		vertices[i+1] = static_cast<GLfloat> (vertices[i] * sin(angle)) + (vertices[i+1] * cos(angle));
 	}
 }
 
