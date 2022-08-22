@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "af51fad4-9ae8-49bf-863e-226a23a8c67e": {
+      "ProjectGuid": "af51fad4-9ae8-49bf-863e-226a23a8c67e",
+      "DisplayName": "FirstDirectX",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
